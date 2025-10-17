@@ -1,0 +1,32 @@
+# ###########################
+# ## .NET / Visual Studio ##
+# ###########################
+
+**/[Bb]in/
+**/[Oo]bj/
+
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+**/TestResults/
+
+.idea/
+
+secrets.json
+
+**/appsettings.Local.json
+
+
+# ######################
+# ## OS Generated ##
+# ######################
+
+.DS_Store
+.AppleDouble
+
+
+Thumbs.db
+ehthumbs.db

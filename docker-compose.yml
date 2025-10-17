@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  
+  mongodb:
+    image: mongo:latest
+    container_name: realestate-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - realestate-network
+
+  # API .NET Service
+  api:
+    container_name: realestate-api
+    build:
+      context: ./backend
+      dockerfile: RealEstate.API/Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - mongodb
+    environment:
+      - MongoDbSettings:ConnectionString=mongodb://mongodb:27017
+      - ASPNETCORE_URLS=http://+:80
+    networks:
+      - realestate-network
+
+  frontend:
+    container_name: realestate-frontend
+    build:
+      context: ./frontend
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    environment:
+      - NEXT_PUBLIC_API_URL=http://api:8080
+    networks:
+      - realestate-network
+
+volumes:
+  mongo-data:
+    driver: local
+
+networks:
+  realestate-network:
+    driver: bridge
