@@ -6,6 +6,7 @@
 **/[Oo]bj/
 
 .vs/
+.vscode/
 *.suo
 *.user
 *.userosscache

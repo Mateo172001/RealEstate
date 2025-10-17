@@ -11,6 +11,8 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+
 // --- LOGGING IN SERVER ---
 builder.Host.UseSerilog((context, config) =>
     config.ReadFrom.Configuration(context.Configuration));
@@ -75,7 +77,7 @@ var mongoConnectionString = builder.Configuration["MongoDbSettings:ConnectionStr
 
 if (string.IsNullOrEmpty(mongoConnectionString))
 {
-    throw new InvalidOperationException("La cadena de conexión de MongoDB no está configurada.");
+    throw new InvalidOperationException("La cadena de conexiï¿½n de MongoDB no estï¿½ configurada.");
 }
 
 builder.Services.AddHealthChecks()
@@ -133,12 +135,12 @@ using (var scope = app.Services.CreateScope())
 
         Console.WriteLine("Intentando sembrar la base de datos...");
         await RealEstate.Infrastructure.Data.PropertySeeder.SeedAsync(collection);
-        Console.WriteLine("Sembrado completado con éxito (o la base de datos ya tenía datos).");
+        Console.WriteLine("Sembrado completado con ï¿½xito (o la base de datos ya tenï¿½a datos).");
     }
     catch (Exception ex)
     {
         var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "Ocurrió un error durante el sembrado de la base de datos.");
+        logger.LogError(ex, "Ocurriï¿½ un error durante el sembrado de la base de datos.");
     }
 }
 

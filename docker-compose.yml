@@ -17,12 +17,13 @@ services:
     container_name: realestate-api
     build:
       context: ./backend
-      dockerfile: RealEstate.API/Dockerfile
+      dockerfile: RealEstate.API/Dockerfile.prod
     ports:
       - "8080:80"
     depends_on:
       - mongodb
     environment:
+      - ASPNETCORE_ENVIRONMENT=Development
       - MongoDbSettings:ConnectionString=mongodb://mongodb:27017
       - ASPNETCORE_URLS=http://+:80
     networks:
@@ -32,7 +33,7 @@ services:
     container_name: realestate-frontend
     build:
       context: ./frontend
-      dockerfile: frontend/Dockerfile
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
     depends_on:

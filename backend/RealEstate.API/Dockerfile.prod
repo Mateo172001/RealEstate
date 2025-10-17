@@ -1,25 +1,21 @@
-# --- Build ---
+
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-COPY ["RealEstate.sln", "./"]
+COPY ["RealEstate.docker.sln", "./"]
 COPY ["RealEstate.API/RealEstate.API.csproj", "RealEstate.API/"]
 COPY ["RealEstate.Application/RealEstate.Application.csproj", "RealEstate.Application/"]
 COPY ["RealEstate.Domain/RealEstate.Domain.csproj", "RealEstate.Domain/"]
 COPY ["RealEstate.Infrastructure/RealEstate.Infrastructure.csproj", "RealEstate.Infrastructure/"]
-RUN dotnet restore "RealEstate.sln"
+
+RUN dotnet restore "RealEstate.docker.sln"
 
 COPY . .
 WORKDIR "/src/RealEstate.API"
-
 RUN dotnet publish "RealEstate.API.csproj" -c Release -o /app/publish
 
-# --- Final ---
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
-
 COPY --from=build /app/publish .
-
 EXPOSE 80
-
 ENTRYPOINT ["dotnet", "RealEstate.API.dll"]
