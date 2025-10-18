@@ -1,5 +1,4 @@
 ﻿using RealEstate.Application.DTOs;
-using System.Threading.Tasks;
 
 namespace RealEstate.Application.Interfaces
 {

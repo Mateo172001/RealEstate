@@ -1,7 +1,6 @@
-version: '3.8'
 
 services:
-  
+
   mongodb:
     image: mongo:latest
     container_name: realestate-mongo
@@ -34,12 +33,12 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8080
     ports:
       - "3000:3000"
     depends_on:
       - api
-    environment:
-      - NEXT_PUBLIC_API_URL=http://api:8080
     networks:
       - realestate-network
 

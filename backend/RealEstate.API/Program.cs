@@ -1,7 +1,6 @@
 using Asp.Versioning;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using MongoDB.Driver;
 using RealEstate.API.Middleware;
@@ -50,6 +49,24 @@ builder.Services.AddRateLimiter(options =>
 builder.Services.AddOutputCache(options =>
 {
     options.AddBasePolicy(builder => builder.Expire(TimeSpan.FromMinutes(5)));
+});
+
+// CORS Configuration
+const string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy  =>
+                      {
+                          policy.WithOrigins(
+                                    "http://localhost:3000",
+                                    "http://localhost:8080",
+                                    "http://frontend:3000"
+                                )
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                      });
 });
 
 // API Versioning Configuration
@@ -105,12 +122,15 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
-app.UseHttpsRedirection();
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseResponseCompression();
 app.UseRateLimiter();
-
 
 app.UseSerilogRequestLogging();
 

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿
 namespace RealEstate.Application.DTOs
 {
     public class PaginatedResultDto<T>

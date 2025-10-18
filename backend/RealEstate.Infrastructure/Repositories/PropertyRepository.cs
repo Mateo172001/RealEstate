@@ -3,8 +3,6 @@ using MongoDB.Driver;
 using RealEstate.Domain.Entities;
 using RealEstate.Domain.Interfaces;
 using RealEstate.Infrastructure.Configuration;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using MongoDB.Bson;
 
 namespace RealEstate.Infrastructure.Persistence.Repositories

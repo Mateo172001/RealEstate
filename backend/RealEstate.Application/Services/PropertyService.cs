@@ -2,8 +2,6 @@
 using RealEstate.Application.DTOs;
 using RealEstate.Application.Interfaces;
 using RealEstate.Domain.Interfaces;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace RealEstate.Application.Services
 {
