@@ -54,19 +54,19 @@ builder.Services.AddOutputCache(options =>
 // CORS Configuration
 const string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
+var allowedOrigins = builder.Configuration["AllowedOrigins"]?.Split(',') ??
+                     new[] { "http://localhost:3000", "http://frontend:3000" };
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
-                      policy  =>
-                      {
-                          policy.WithOrigins(
-                                    "http://localhost:3000",
-                                    "http://localhost:8080",
-                                    "http://frontend:3000"
-                                )
-                                .AllowAnyHeader()
-                                .AllowAnyMethod();
-                      });
+        policy =>
+        {
+            policy.WithOrigins(allowedOrigins)
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials();
+        });
 });
 
 // API Versioning Configuration
